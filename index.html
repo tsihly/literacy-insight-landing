@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Literacy Insight | Educational Consulting & Coaching</title>
+<meta name="description" content="Literacy Insight, founded by Tagrid Sihly, offers structured literacy coaching, professional development, and family workshops grounded in the science of reading. Schedule a free consultation today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0D4F5C;
+    --navy-light: #165f6e;
+    --teal: #2a9d8f;
+    --teal-light: #48bbb0;
+    --gold: #e9c46a;
+    --gold-deep: #c9a03a;
+    --cream: #faf8f4;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a5568;
+    --text-light: #718096;
+    --white: #ffffff;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); color: var(--text-dark); background: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0.9rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: transparent;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+  }
+  nav.scrolled { background: rgba(13,79,92,0.97); box-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 48px; width: auto; transition: opacity 0.2s; }
+  .nav-logo:hover img { opacity: 0.85; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.875rem; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--teal) !important; color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 500 !important; transition: background 0.2s, transform 0.2s !important; }
+  .nav-cta:hover { background: var(--teal-light) !important; transform: translateY(-1px); }
+  @media (max-width: 750px) { .nav-links { display: none; } }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  #bg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.15; }
+
+  .hero-bg-shapes { position: absolute; inset: 0; pointer-events: none; }
+  .shape { position: absolute; border-radius: 50%; }
+  .shape-1 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(42,157,143,0.15) 0%, transparent 70%); top: -180px; right: -120px; animation: float1 14s ease-in-out infinite; }
+  .shape-2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(233,196,106,0.1) 0%, transparent 70%); bottom: -120px; left: -80px; animation: float2 17s ease-in-out infinite; }
+  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-25px,18px)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(18px,-22px)} }
+
+  /* ── HERO LAYOUT ── */
+  .hero-inner {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2.5rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .hero-inner { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; }
+    .hero-illustration { display: none; }
+  }
+
+  /* ── HERO TEXT ── */
+  .hero-content { opacity: 0; animation: fadeInUp 0.9s var(--ease-out) 0.2s forwards; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(42,157,143,0.2); border: 1px solid rgba(42,157,143,0.4);
+    color: var(--teal-light); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before { content:''; width:6px; height:6px; background:var(--teal-light); border-radius:50%; animation: dotpulse 2s infinite; }
+  @keyframes dotpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-weight: 700; color: var(--white);
+    line-height: 1.18; margin-bottom: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.78; max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--teal); color: var(--white);
+    padding: 0.85rem 1.9rem; border-radius: 50px;
+    font-size: 0.93rem; font-weight: 500; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(42,157,143,0.35); }
+  .btn-primary svg { transition: transform 0.25s; }
+  .btn-primary:hover svg { transform: translateX(3px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 0.85rem 1.9rem; border-radius: 50px;
+    font-size: 0.93rem; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.32);
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.06); }
+
+  /* ── CANDLE ILLUSTRATION ── */
+  .hero-illustration {
+    opacity: 0;
+    animation: fadeInRight 1s var(--ease-out) 0.7s forwards;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @keyframes fadeInRight { from{opacity:0;transform:translateX(35px)} to{opacity:1;transform:translateX(0)} }
+
+  .candle-wrap { position: relative; width: 400px; height: 440px; }
+
+  /* Glow behind flame */
+  .flame-glow {
+    position: absolute; top: 52px; left: 50%;
+    transform: translateX(-50%);
+    width: 130px; height: 130px;
+    background: radial-gradient(circle, rgba(233,196,106,0.38) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  @keyframes glowPulse { 0%,100%{opacity:0.6;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.25)} }
+
+  /* Floating "Literacy Insight" label */
+  .candle-label {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.09em;
+    white-space: nowrap;
+    opacity: 0;
+    animation: labelFade 1s ease 2.6s forwards;
+  }
+  @keyframes labelFade { from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:0.92;transform:translateX(-50%) translateY(0)} }
+
+  /* Hero stats bar */
+  .hero-stats {
+    position: absolute; bottom: 2.5rem; left: 2.5rem;
+    display: flex; gap: 3rem; z-index: 2;
+    opacity: 0; animation: fadeInUp 0.9s var(--ease-out) 1s forwards;
+  }
+  .stat-num { font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--gold); display:block; line-height:1; }
+  .stat-label { font-size:0.75rem; color:rgba(255,255,255,0.5); letter-spacing:0.06em; text-transform:uppercase; margin-top:0.3rem; display:block; }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1{transition-delay:0.1s} .reveal-delay-2{transition-delay:0.2s} .reveal-delay-3{transition-delay:0.3s}
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow { font-size:0.76rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); margin-bottom:0.65rem; }
+  .section-title { font-family:var(--font-display); font-size:clamp(1.75rem,3.2vw,2.5rem); font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:0.9rem; letter-spacing:-0.02em; }
+  .section-sub { font-size:1rem; color:var(--text-mid); line-height:1.75; max-width:560px; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--white); }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(275px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .service-card { padding:1.9rem; border-radius:16px; border:1px solid #e8edf2; background:var(--white); text-decoration:none; color:inherit; display:block; transition:transform 0.3s var(--ease-out), box-shadow 0.3s, border-color 0.3s; }
+  .service-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(13,79,92,0.1); border-color:var(--teal); }
+  .service-icon { width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem; font-size:1.5rem; }
+  .icon-teal{background:rgba(42,157,143,0.12)} .icon-navy{background:rgba(13,79,92,0.1)} .icon-gold{background:rgba(233,196,106,0.2)}
+  .service-card h3 { font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--navy); margin-bottom:0.55rem; }
+  .service-card p { font-size:0.88rem; color:var(--text-mid); line-height:1.7; }
+  .service-link { display:inline-flex; align-items:center; gap:0.3rem; margin-top:1rem; font-size:0.83rem; font-weight:500; color:var(--teal); text-decoration:none; }
+  .service-link svg { transition:transform 0.2s; }
+  .service-card:hover .service-link svg { transform:translateX(3px); }
+
+  /* ── ABOUT ── */
+  .about-strip { background:var(--navy); padding:5rem 2rem; }
+  .about-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  @media(max-width:700px){.about-inner{grid-template-columns:1fr;gap:2rem}.about-photo-wrap{order:-1}}
+  .about-text .section-eyebrow{color:var(--teal-light)} .about-text .section-title{color:var(--white)}
+  .about-text p{font-size:0.93rem;color:rgba(255,255,255,0.68);line-height:1.82;margin-bottom:1rem}
+  .about-text .btn-primary{margin-top:1rem}
+  .about-photo-wrap{position:relative}
+  .about-photo-frame{border-radius:20px;overflow:hidden;border:3px solid rgba(42,157,143,0.4);line-height:0}
+  .about-photo-frame img{width:100%;height:400px;object-fit:cover;object-position:top;display:block;filter:brightness(0.93)}
+  .about-badge{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--gold);color:var(--navy);border-radius:14px;padding:1rem 1.3rem;font-weight:600;font-family:var(--font-display);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
+  .about-badge .num{font-size:2rem;display:block;line-height:1}
+  .about-badge .lbl{font-size:0.73rem;font-weight:400;font-family:var(--font-body);display:block;margin-top:0.2rem}
+
+  /* ── PILLARS ── */
+  .pillars{background:var(--cream)}
+  .pillars-list{display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:2.5rem}
+  .pillar-tag{background:var(--white);border:1px solid #dde4ec;border-radius:50px;padding:0.55rem 1.2rem;font-size:0.88rem;color:var(--navy);font-weight:500;text-decoration:none;transition:background 0.2s,color 0.2s,border-color 0.2s,transform 0.2s;display:inline-flex;align-items:center;gap:0.4rem}
+  .pillar-tag:hover{background:var(--navy);color:var(--white);border-color:var(--navy);transform:translateY(-2px)}
+
+  /* ── TESTIMONIALS ── */
+  .testimonials{background:var(--white)}
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem;margin-top:3rem}
+  .testimonial-card{background:var(--cream);border-radius:16px;padding:1.7rem}
+  .quote-mark{font-family:var(--font-display);font-size:3.5rem;color:var(--teal);opacity:0.22;line-height:1;margin-bottom:-0.4rem}
+  .testimonial-card blockquote{font-size:0.88rem;color:var(--text-mid);line-height:1.8;font-style:italic;margin-bottom:1.2rem}
+  .testimonial-attribution{font-size:0.8rem;font-weight:600;color:var(--navy)}
+  .testimonial-role{font-size:0.76rem;color:var(--text-light);margin-top:0.15rem}
+
+  /* ── CTA ── */
+  .cta-banner{background:linear-gradient(135deg,var(--teal) 0%,#1a6b62 100%);padding:4.5rem 2rem;text-align:center}
+  .cta-banner h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.7rem);color:var(--white);margin-bottom:1rem;font-weight:700}
+  .cta-banner p{color:rgba(255,255,255,0.8);font-size:1rem;max-width:490px;margin:0 auto 2rem;line-height:1.72}
+  .btn-gold{background:var(--gold);color:var(--navy);padding:0.88rem 2.1rem;border-radius:50px;font-size:0.97rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:transform 0.25s,box-shadow 0.25s}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+
+  /* ── FOOTER ── */
+  footer{background:#071f25;color:rgba(255,255,255,0.55);text-align:center;padding:2.5rem 2rem;font-size:0.83rem}
+  footer a{color:var(--teal-light);text-decoration:none}
+  footer a:hover{color:var(--gold)}
+  .footer-links{display:flex;justify-content:center;gap:1.8rem;margin-bottom:1rem;flex-wrap:wrap}
+
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="https://literacyinsight.com" class="nav-logo">
+    <img src="https://literacyinsight.com/wp-content/uploads/2025/12/literacy-insight-2-1.png" alt="Literacy Insight">
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://literacyinsight.com/my-leadership-journey/">Tagrid's Leadership Journey</a></li>
+    <li><a href="https://literacyinsight.com/services/">Services</a></li>
+    <li><a href="https://literacyinsight.com/literacy-resources/">Resources</a></li>
+    <li><a href="https://literacyinsight.com/blog/">Blog</a></li>
+    <li><a href="https://calendly.com/tagrid-sihly/30min" class="nav-cta">Free Consultation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="bg-canvas"></canvas>
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+  </div>
+
+  <div class="hero-inner">
+
+    <!-- LEFT: Text -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">Structured Literacy Specialist</div>
+      <h1>
+        <em>Lighting</em> the way<br>to literacy.
+      </h1>
+      <p class="hero-sub">
+        Literacy Insight empowers educators and families with research-informed instruction, professional development, and structured literacy support grounded in the science of reading.
+      </p>
+      <div class="hero-actions">
+        <a href="https://calendly.com/tagrid-sihly/30min" class="btn-primary">
+          Schedule a free consultation
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://literacyinsight.com/services/" class="btn-outline">Explore services</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Candle + Book illustration -->
+    <div class="hero-illustration" aria-hidden="true">
+      <div class="candle-wrap">
+        <div class="candle-label">Literacy Insight</div>
+        <div class="flame-glow"></div>
+
+        <svg viewBox="0 0 400 440" width="400" height="440" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="candleGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(180,210,225,0.55)"/>
+              <stop offset="35%" stop-color="rgba(220,240,255,0.5)"/>
+              <stop offset="100%" stop-color="rgba(150,185,205,0.4)"/>
+            </linearGradient>
+            <linearGradient id="flameOuter" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,210,0.98)"/>
+              <stop offset="38%" stop-color="rgba(233,196,106,0.96)"/>
+              <stop offset="100%" stop-color="rgba(200,95,15,0.82)"/>
+            </linearGradient>
+            <linearGradient id="flameInner" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,235,1)"/>
+              <stop offset="55%" stop-color="rgba(255,215,80,0.92)"/>
+              <stop offset="100%" stop-color="rgba(230,145,25,0.72)"/>
+            </linearGradient>
+            <linearGradient id="bookCoverL" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(42,157,143,0.55)"/>
+              <stop offset="100%" stop-color="rgba(42,157,143,0.3)"/>
+            </linearGradient>
+            <linearGradient id="bookCoverR" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(42,157,143,0.3)"/>
+              <stop offset="100%" stop-color="rgba(42,157,143,0.55)"/>
+            </linearGradient>
+            <radialGradient id="pageGlowL" cx="80%" cy="10%" r="70%">
+              <stop offset="0%" stop-color="rgba(233,196,106,0.18)"/>
+              <stop offset="100%" stop-color="rgba(233,196,106,0)"/>
+            </radialGradient>
+            <radialGradient id="pageGlowR" cx="20%" cy="10%" r="70%">
+              <stop offset="0%" stop-color="rgba(233,196,106,0.18)"/>
+              <stop offset="100%" stop-color="rgba(233,196,106,0)"/>
+            </radialGradient>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- ═══ OPEN BOOK (logo-style: pages curve up at spine) ═══ -->
+
+          <!-- Book shadow on ground -->
+          <ellipse cx="200" cy="398" rx="115" ry="10" fill="rgba(0,0,0,0.18)"/>
+
+          <!-- LEFT PAGE — sweeps from spine upward and out to the left -->
+          <!-- Cover / back of left page -->
+          <path d="M200 320 Q200 340 195 360 L60 375 Q45 376 42 365 L42 290 Q42 275 58 272 Q120 265 200 270 Z"
+            fill="url(#bookCoverL)" stroke="rgba(42,157,143,0.6)" stroke-width="1.2"/>
+          <!-- Page face (slightly lighter, curves up to spine) -->
+          <path d="M200 270 Q120 265 58 272 Q42 275 42 290 L42 355 Q42 368 58 369 L195 358 Q200 357 200 345 Z"
+            fill="rgba(255,255,255,0.09)"/>
+          <!-- Page face warm glow near candle -->
+          <path d="M200 270 Q120 265 58 272 Q42 275 42 290 L42 355 Q42 368 58 369 L195 358 Q200 357 200 345 Z"
+            fill="url(#pageGlowL)"/>
+          <!-- Page edge highlight -->
+          <path d="M42 290 Q42 275 58 272 Q120 265 200 270"
+            stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+
+          <!-- Text lines on left page — animate in -->
+          <line x1="62" y1="295" x2="185" y2="291" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="0.6s" fill="freeze"/>
+          </line>
+          <line x1="62" y1="308" x2="172" y2="305" stroke="rgba(255,255,255,0.12)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 115" to="115 0" dur="0.9s" begin="0.8s" fill="freeze"/>
+          </line>
+          <line x1="62" y1="321" x2="185" y2="318" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="1.0s" fill="freeze"/>
+          </line>
+          <line x1="62" y1="334" x2="155" y2="331" stroke="rgba(255,255,255,0.12)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="0.85s" begin="1.2s" fill="freeze"/>
+          </line>
+          <line x1="62" y1="347" x2="185" y2="344" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="1.4s" fill="freeze"/>
+          </line>
+          <line x1="62" y1="358" x2="118" y2="357" stroke="rgba(233,196,106,0.4)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 60" to="60 0" dur="0.7s" begin="1.6s" fill="freeze"/>
+          </line>
+
+          <!-- RIGHT PAGE — mirror, curves up from spine to right -->
+          <!-- Cover -->
+          <path d="M200 320 Q200 340 205 360 L340 375 Q355 376 358 365 L358 290 Q358 275 342 272 Q280 265 200 270 Z"
+            fill="url(#bookCoverR)" stroke="rgba(42,157,143,0.6)" stroke-width="1.2"/>
+          <!-- Page face -->
+          <path d="M200 270 Q280 265 342 272 Q358 275 358 290 L358 355 Q358 368 342 369 L205 358 Q200 357 200 345 Z"
+            fill="rgba(255,255,255,0.09)"/>
+          <path d="M200 270 Q280 265 342 272 Q358 275 358 290 L358 355 Q358 368 342 369 L205 358 Q200 357 200 345 Z"
+            fill="url(#pageGlowR)"/>
+          <!-- Page edge highlight -->
+          <path d="M200 270 Q280 265 342 272 Q358 275 358 290"
+            stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+
+          <!-- Text lines right page -->
+          <line x1="215" y1="291" x2="338" y2="295" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="0.7s" fill="freeze"/>
+          </line>
+          <line x1="228" y1="305" x2="338" y2="308" stroke="rgba(255,255,255,0.12)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 115" to="115 0" dur="0.9s" begin="0.9s" fill="freeze"/>
+          </line>
+          <line x1="215" y1="318" x2="338" y2="321" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="1.1s" fill="freeze"/>
+          </line>
+          <line x1="245" y1="331" x2="338" y2="334" stroke="rgba(255,255,255,0.12)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="0.85s" begin="1.3s" fill="freeze"/>
+          </line>
+          <line x1="215" y1="344" x2="338" y2="347" stroke="rgba(255,255,255,0.18)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 130" to="130 0" dur="1s" begin="1.5s" fill="freeze"/>
+          </line>
+          <line x1="282" y1="357" x2="338" y2="358" stroke="rgba(233,196,106,0.4)" stroke-width="1.2">
+            <animate attributeName="stroke-dasharray" from="0 60" to="60 0" dur="0.7s" begin="1.7s" fill="freeze"/>
+          </line>
+
+          <!-- Spine — central ridge curving up, like logo -->
+          <path d="M200 270 Q198 300 198 345 Q198 358 200 365 Q202 358 202 345 Q202 300 200 270 Z"
+            fill="rgba(0,0,0,0.25)" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+
+          <!-- ═══ CANDLE (bigger, sitting on book spine area) ═══ -->
+
+          <!-- Candle body -->
+          <rect x="182" y="148" width="36" height="130" rx="5"
+            fill="url(#candleGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
+          <!-- Candle top rim (ellipse) -->
+          <ellipse cx="200" cy="148" rx="18" ry="5" fill="rgba(220,240,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+          <!-- Candle bottom rim -->
+          <ellipse cx="200" cy="278" rx="18" ry="5" fill="rgba(150,185,205,0.35)"/>
+
+          <!-- Wax drip left -->
+          <path d="M182 168 Q177 180 179 192 Q181 197 182 188 Z" fill="rgba(220,240,255,0.25)"/>
+          <!-- Wax drip right -->
+          <path d="M218 175 Q223 188 221 198 Q219 202 218 192 Z" fill="rgba(220,240,255,0.2)"/>
+          <!-- Wax drip left small -->
+          <path d="M182 200 Q178 208 180 214 Q182 217 182 210 Z" fill="rgba(220,240,255,0.18)"/>
+
+          <!-- Highlight streak on candle -->
+          <rect x="190" y="155" width="6" height="110" rx="3" fill="rgba(255,255,255,0.1)"/>
+
+          <!-- Wick -->
+          <line x1="200" y1="148" x2="200" y2="133" stroke="rgba(60,30,5,0.95)" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- ═══ FLAME ═══ -->
+          <g filter="url(#softGlow)">
+            <!-- Outer flame -->
+            <path d="M200 133 C192 120 187 106 194 92 C197 85 200 78 200 70 C200 78 203 85 206 92 C213 106 208 120 200 133Z"
+              fill="url(#flameOuter)" opacity="0.92">
+              <animateTransform attributeName="transform" type="rotate"
+                values="0 200 102;2.5 200 102;-2.5 200 102;1 200 102;-1.5 200 102;0 200 102"
+                dur="1.9s" repeatCount="indefinite"/>
+            </path>
+            <!-- Inner flame -->
+            <path d="M200 129 C196 118 193 107 197 97 C198 92 200 87 200 83 C200 87 202 92 203 97 C207 107 204 118 200 129Z"
+              fill="url(#flameInner)">
+              <animateTransform attributeName="transform" type="rotate"
+                values="0 200 107;-3 200 107;3 200 107;-1 200 107;0 200 107"
+                dur="1.4s" repeatCount="indefinite"/>
+            </path>
+            <!-- White-hot core -->
+            <ellipse cx="200" cy="108" rx="4" ry="7.5" fill="rgba(255,255,248,0.95)">
+              <animate attributeName="ry" values="7.5;9;6.5;8;7.5" dur="1.7s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="108;106;109;107;108" dur="1.7s" repeatCount="indefinite"/>
+            </ellipse>
+          </g>
+
+          <!-- Radiance rays from flame -->
+          <g opacity="0">
+            <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.8s" fill="freeze"/>
+            <line x1="200" y1="90" x2="200" y2="55"  stroke="rgba(233,196,106,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="228" y2="62"  stroke="rgba(233,196,106,0.38)" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="172" y2="62"  stroke="rgba(233,196,106,0.38)" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="242" y2="78"  stroke="rgba(233,196,106,0.28)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="158" y2="78"  stroke="rgba(233,196,106,0.28)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="248" y2="100" stroke="rgba(233,196,106,0.22)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="200" y1="90" x2="152" y2="100" stroke="rgba(233,196,106,0.22)" stroke-width="1" stroke-linecap="round"/>
+          </g>
+
+          <!-- Floating sparkles -->
+          <circle cx="178" cy="96" r="2.5" fill="rgba(233,196,106,0.75)">
+            <animate attributeName="cy" values="96;84;96" dur="2.3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.75;0;0.75" dur="2.3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="222" cy="103" r="2" fill="rgba(233,196,106,0.6)">
+            <animate attributeName="cy" values="103;90;103" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="188" cy="78" r="1.8" fill="rgba(255,242,180,0.85)">
+            <animate attributeName="cy" values="78;66;78" dur="2.7s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.85;0;0.85" dur="2.7s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="213" cy="72" r="1.5" fill="rgba(255,235,160,0.7)">
+            <animate attributeName="cy" values="72;61;72" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+          <!-- ── OPEN BOOK ── -->
+          <!-- Left page -->
+          <path d="M20 200 Q20 185 35 182 L148 175 L148 310 Q148 318 140 320 L28 320 Q20 318 20 310 Z"
+            fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <!-- Right page -->
+          <path d="M300 200 Q300 185 285 182 L172 175 L172 310 Q172 318 180 320 L292 320 Q300 318 300 310 Z"
+            fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <!-- Spine shadow -->
+          <path d="M148 175 Q160 170 172 175 L172 320 Q160 325 148 320 Z" fill="rgba(0,0,0,0.18)"/>
+          <!-- Book lines left page, drawing in sequence -->
+          <line x1="38" y1="210" x2="134" y2="208" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="0.5s" fill="freeze"/>
+          </line>
+          <line x1="38" y1="224" x2="120" y2="222" stroke="rgba(255,255,255,0.1)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 90" to="90 0" dur="0.9s" begin="0.7s" fill="freeze"/>
+          </line>
+          <line x1="38" y1="238" x2="134" y2="236" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="0.9s" fill="freeze"/>
+          </line>
+          <line x1="38" y1="252" x2="110" y2="250" stroke="rgba(255,255,255,0.1)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 80" to="80 0" dur="0.85s" begin="1.1s" fill="freeze"/>
+          </line>
+          <line x1="38" y1="266" x2="134" y2="264" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="1.3s" fill="freeze"/>
+          </line>
+          <line x1="38" y1="280" x2="90" y2="278" stroke="rgba(233,196,106,0.35)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 60" to="60 0" dur="0.7s" begin="1.5s" fill="freeze"/>
+          </line>
+          <!-- Book lines right page -->
+          <line x1="186" y1="210" x2="282" y2="208" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="0.6s" fill="freeze"/>
+          </line>
+          <line x1="186" y1="224" x2="268" y2="222" stroke="rgba(255,255,255,0.1)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 90" to="90 0" dur="0.9s" begin="0.8s" fill="freeze"/>
+          </line>
+          <line x1="186" y1="238" x2="282" y2="236" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="1.0s" fill="freeze"/>
+          </line>
+          <line x1="186" y1="252" x2="255" y2="250" stroke="rgba(255,255,255,0.1)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 80" to="80 0" dur="0.85s" begin="1.2s" fill="freeze"/>
+          </line>
+          <line x1="186" y1="266" x2="282" y2="264" stroke="rgba(255,255,255,0.15)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1s" begin="1.4s" fill="freeze"/>
+          </line>
+          <line x1="186" y1="280" x2="235" y2="278" stroke="rgba(233,196,106,0.35)" stroke-width="1.3">
+            <animate attributeName="stroke-dasharray" from="0 60" to="60 0" dur="0.7s" begin="1.6s" fill="freeze"/>
+          </line>
+
+          <!-- ── CANDLE BODY ── -->
+          <!-- Wax body -->
+          <rect x="144" y="140" width="32" height="68" rx="4"
+            fill="url(#candleGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <!-- Candle top rim -->
+          <ellipse cx="160" cy="140" rx="16" ry="4" fill="rgba(255,255,255,0.3)"/>
+          <!-- Wax drip left -->
+          <path d="M144 155 Q140 165 142 172 Q144 175 144 168 Z" fill="rgba(255,255,255,0.15)"/>
+          <!-- Wax drip right -->
+          <path d="M176 160 Q180 170 178 176 Q176 179 176 172 Z" fill="rgba(255,255,255,0.12)"/>
+          <!-- Wick -->
+          <line x1="160" y1="140" x2="160" y2="128" stroke="rgba(80,40,10,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- ── FLAME ── -->
+          <g>
+            <!-- Outer flame (large, amber) -->
+            <path d="M160 128 C154 118 150 108 156 98 C158 93 160 88 160 83 C160 88 162 93 164 98 C170 108 166 118 160 128Z"
+              fill="url(#flameOuter)" opacity="0.9">
+              <animateTransform attributeName="transform" type="rotate"
+                values="0 160 110;2 160 110;-2 160 110;1 160 110;-1 160 110;0 160 110"
+                dur="1.8s" repeatCount="indefinite"/>
+            </path>
+            <!-- Inner flame (bright gold) -->
+            <path d="M160 124 C157 116 155 108 158 102 C159 98 160 94 160 91 C160 94 161 98 162 102 C165 108 163 116 160 124Z"
+              fill="url(#flameInner)">
+              <animateTransform attributeName="transform" type="rotate"
+                values="0 160 108;-2 160 108;2 160 108;0 160 108"
+                dur="1.3s" repeatCount="indefinite"/>
+            </path>
+            <!-- Flame core (white-hot) -->
+            <ellipse cx="160" cy="112" rx="3.5" ry="6" fill="rgba(255,255,240,0.9)">
+              <animate attributeName="ry" values="6;7;5.5;6" dur="1.6s" repeatCount="indefinite"/>
+            </ellipse>
+          </g>
+
+          <!-- Defs -->
+          <defs>
+            <linearGradient id="candleGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(200,220,230,0.6)"/>
+              <stop offset="40%" stop-color="rgba(230,245,255,0.5)"/>
+              <stop offset="100%" stop-color="rgba(160,190,210,0.4)"/>
+            </linearGradient>
+            <linearGradient id="flameOuter" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,200,0.95)"/>
+              <stop offset="40%" stop-color="rgba(233,196,106,0.95)"/>
+              <stop offset="100%" stop-color="rgba(200,100,20,0.8)"/>
+            </linearGradient>
+            <linearGradient id="flameInner" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,230,1)"/>
+              <stop offset="60%" stop-color="rgba(255,210,80,0.9)"/>
+              <stop offset="100%" stop-color="rgba(230,150,30,0.7)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Floating sparkles around flame -->
+          <circle cx="145" cy="94" r="2" fill="rgba(233,196,106,0.7)">
+            <animate attributeName="cy" values="94;86;94" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0;0.7" dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="175" cy="100" r="1.5" fill="rgba(233,196,106,0.6)">
+            <animate attributeName="cy" values="100;91;100" dur="1.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="1.9s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="152" cy="80" r="1.5" fill="rgba(255,240,180,0.8)">
+            <animate attributeName="cy" values="80;72;80" dur="2.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="2.6s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">26+</span>
+      <span class="stat-label">Years of experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Research-based</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <p class="section-eyebrow reveal">What I offer</p>
+    <h2 class="section-title reveal reveal-delay-1">Services designed for<br>real classroom impact</h2>
+    <p class="section-sub reveal reveal-delay-2">Every service is grounded in the science of reading and tailored to strengthen literacy outcomes for students at all levels.</p>
+    <div class="services-grid">
+      <a href="https://literacyinsight.com/professional-development/" class="service-card reveal reveal-delay-1">
+        <div class="service-icon icon-teal">📚</div>
+        <h3>Professional Development</h3>
+        <p>High-impact professional learning for teachers and school leaders, grounded in research-based practice and designed to elevate teaching and build schoolwide capacity.</p>
+        <span class="service-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="https://literacyinsight.com/families-as-partners/" class="service-card reveal reveal-delay-2">
+        <div class="service-icon icon-gold">🏠</div>
+        <h3>Families as Partners</h3>
+        <p>Strategic webinars and courses giving parents the tools to support their children's literacy development and reading enjoyment at home.</p>
+        <span class="service-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="https://literacyinsight.com/structured-literacy-instruction/" class="service-card reveal reveal-delay-3">
+        <div class="service-icon icon-navy">✏️</div>
+        <h3>Structured Literacy Instruction</h3>
+        <p>Systematic, explicit virtual sessions in reading and writing — especially powerful for struggling readers and students with Dyslexia.</p>
+        <span class="service-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip">
+  <div class="about-inner">
+    <div class="about-text reveal">
+      <p class="section-eyebrow">About Ms. Tagrid</p>
+      <h2 class="section-title">An educator with 26 years of classroom wisdom</h2>
+      <p>Tagrid Sihly is an experienced educational leader with deep expertise in building teacher capacity, coaching, and structured literacy. She has served as a teacher, reading specialist, reading coach, and instructional specialist.</p>
+      <p>She believes that every student deserves effective, research-informed literacy instruction — and that it begins with knowledgeable, well-prepared teachers.</p>
+      <a href="https://literacyinsight.com/my-leadership-journey/" class="btn-primary">
+        Read my story
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="about-photo-wrap reveal reveal-delay-2">
+      <div class="about-photo-frame">
+        <img src="https://literacyinsight.com/wp-content/uploads/2026/01/tagrid-professional-photo.png" alt="Tagrid Sihly, founder of Literacy Insight" loading="lazy">
+      </div>
+      <div class="about-badge">
+        <span class="num">26+</span>
+        <span class="lbl">Years of experience</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="container">
+    <p class="section-eyebrow reveal">The foundation</p>
+    <h2 class="section-title reveal reveal-delay-1">The six pillars of literacy</h2>
+    <p class="section-sub reveal reveal-delay-2">Explore research-backed resources for each pillar of effective literacy instruction.</p>
+    <div class="pillars-list reveal reveal-delay-3">
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/phonemic-awareness/" class="pillar-tag">🔤 Phonemic Awareness</a>
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/phonics/" class="pillar-tag">📖 Phonics</a>
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/fluency/" class="pillar-tag">⚡ Fluency</a>
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/vocabulary/" class="pillar-tag">💬 Vocabulary</a>
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/comprehension/" class="pillar-tag">🧠 Comprehension</a>
+      <a href="https://literacyinsight.com/the-pillars-of-literacy/writing/" class="pillar-tag">✍️ Writing</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <p class="section-eyebrow reveal">What educators say</p>
+    <h2 class="section-title reveal reveal-delay-1">Trusted by teachers,<br>coaches & school leaders</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="quote-mark">"</div>
+        <blockquote>Her workshops were centered around the latest research in literacy development. They were both informative and interactive. The staff loved them!</blockquote>
+        <div class="testimonial-attribution">Maria Diaz</div>
+        <div class="testimonial-role">Principal, P.S. 024, Brooklyn, NY</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="quote-mark">"</div>
+        <blockquote>Tagrid fostered a safe, collaborative learning environment through thoughtfully designed professional development and nonjudgmental feedback.</blockquote>
+        <div class="testimonial-attribution">Sharon A. Palms</div>
+        <div class="testimonial-role">Literacy Coach</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="quote-mark">"</div>
+        <blockquote>Tagrid's knowledge of teaching, coaching, and the science of reading are among what makes her stand out in her commitment to excellence.</blockquote>
+        <div class="testimonial-attribution">Evette Gonzalez</div>
+        <div class="testimonial-role">Deputy Director of Funded Programs, NYC DOE</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="quote-mark">"</div>
+        <blockquote>Tagrid led professional development sessions with confidence, clarity, and a deep knowledge of best practices in literacy instruction.</blockquote>
+        <div class="testimonial-attribution">Scott Freiberger</div>
+        <div class="testimonial-role">Assistant Principal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container">
+    <h2 class="reveal">Ready to transform literacy in your school?</h2>
+    <p class="reveal reveal-delay-1">Let's talk about how Literacy Insight can support your teachers, students, and families.</p>
+    <a href="https://calendly.com/tagrid-sihly/30min" class="btn-gold reveal reveal-delay-2">
+      Schedule your free consultation
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="https://literacyinsight.com">Home</a>
+    <a href="https://literacyinsight.com/my-leadership-journey/">Tagrid's Leadership Journey</a>
+    <a href="https://literacyinsight.com/services/">Services</a>
+    <a href="https://literacyinsight.com/literacy-resources/">Resources</a>
+    <a href="https://literacyinsight.com/blog/">Blog</a>
+    <a href="https://literacyinsight.com/contact/">Get in Touch</a>
+  </div>
+  <p>© 2026 Literacy Insight · Founded by Tagrid Sihly · <a href="mailto:TagridSihly@gmail.com">TagridSihly@gmail.com</a></p>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Canvas background — floating literacy particles
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  const chars = ['A','a','B','b','Th','Ph','Sh','Ch','L','I','R','✦','◆','s','t','n'];
+  const particles = Array.from({ length: 50 }, () => {
+    return {
+      x: Math.random() * (typeof W !== 'undefined' ? W : 800),
+      y: Math.random() * (typeof H !== 'undefined' ? H : 600),
+      char: chars[Math.floor(Math.random() * chars.length)],
+      size: 9 + Math.random() * 13,
+      speed: 0.12 + Math.random() * 0.28,
+      opacity: 0.04 + Math.random() * 0.1,
+      drift: (Math.random() - 0.5) * 0.25,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.004,
+    };
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.y -= p.speed; p.x += p.drift; p.rotation += p.rotSpeed;
+      if (p.y < -30) { p.y = H + 20; p.x = Math.random() * W; p.char = chars[Math.floor(Math.random() * chars.length)]; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `${p.size}px 'Playfair Display', serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(p.char, 0, 0);
+      ctx.restore();
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+</body>
+</html>
